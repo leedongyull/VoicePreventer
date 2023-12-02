@@ -52,6 +52,7 @@ class _chapter_listState extends State<chapter_list> {
                 ),
               ),
               Container(
+                color: Colors.white,
                 width: MediaQuery.of(context).size.width/100*80,
                 height: MediaQuery.of(context).size.height/100*85,
                 child: Column(
@@ -79,6 +80,7 @@ class _chapter_listState extends State<chapter_list> {
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height/100*80,
+                      color: Colors.white,
                       child: Column(
                         children: [
                           Container(
@@ -150,7 +152,7 @@ class _chapter_listState extends State<chapter_list> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("Chapter2"),
-                                      Text("핸드폰 수리")
+                                      Text("대출 피싱")
                                     ],
                                   )
                                 ],
@@ -173,30 +175,7 @@ class _chapter_listState extends State<chapter_list> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("Chapter3"),
-                                      Text("핸드폰 수리")
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          MaterialButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const chatting()));
-                            },
-                            child:Container(
-                              margin: EdgeInsets.only(left: 20),
-                              height: MediaQuery.of(context).size.height/100*12,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.account_circle_rounded,size: 50,),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Chapter4"),
-                                      Text("핸드폰 수리")
+                                      Text("대포통장")
                                     ],
                                   )
                                 ],
@@ -216,6 +195,7 @@ class _chapter_listState extends State<chapter_list> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height/100*15,
           color: Colors.black,
+          child: Center(child: Text("광고 배너",style: TextStyle(color: Colors.white),)),
         )
       ],
     );

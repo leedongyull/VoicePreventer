@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'dart:async';
 
+import 'package:voicepreventer/chapter_list.dart';
+
 class scenario1 extends StatefulWidget {
   const scenario1({Key? key}) : super(key: key);
 
@@ -72,6 +74,7 @@ int select=0;
 int select_count=0;
 StreamController<int> _events = new StreamController<int>.broadcast();
 bool finish = false;
+int startIndex=9;
 
 class _scenario1State extends State<scenario1> {
   int _counter=30;
@@ -80,7 +83,7 @@ class _scenario1State extends State<scenario1> {
   initState() {
     super.initState();
     _events.add(30);
-    _counter=30;
+    _counter=15;
   }
   late Timer _timer;
 
@@ -97,11 +100,49 @@ class _scenario1State extends State<scenario1> {
     return MaterialApp(
       home: GestureDetector(
         onTap: (){
-          if(chatting_count>86){
-
+          if(select==1 ? chatting_count > 77 : chatting_count > 86){
+            showDialog(
+                context: context,
+                builder: (BuildContext context){
+                  return AlertDialog(
+                    backgroundColor: Colors.white,
+                    actions: [
+                      Container(
+                        height: MediaQuery.of(context).size.height/100*30,
+                        width: MediaQuery.of(context).size.width/100*60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height/100*15,
+                              child: Center(child: Text("점수 : 100",style: TextStyle(fontSize: 20,color: Colors.black),)),
+                            ),
+                            MaterialButton(
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>chapter_list()));
+                              },
+                              child:Container(
+                                height: MediaQuery.of(context).size.height/100*5,
+                                width: MediaQuery.of(context).size.width/100*20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(width: 1)
+                                ),
+                                child: Center(child: Text("돌아가기"),),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+            });
           }
           else{
-            if(chatting_count==79){
+            if(chatting_count>79){
               finish=true;
             }
             setState(() {
@@ -110,6 +151,7 @@ class _scenario1State extends State<scenario1> {
             });
             if(part_count==part[idx]){
               idx++;
+              _counter=15;
               _timer = Timer.periodic(Duration(seconds: 1), (timer) {
                 (_counter > 0) ? _counter-- : {
                   _timer.cancel(),
@@ -163,10 +205,12 @@ class _scenario1State extends State<scenario1> {
                                 ),
                                 MaterialButton(
                                   onPressed: (){
+                                    if(select_count==1){
+                                      select=1;
+                                    }
                                     Navigator.pop(context);
                                     setState(() {
                                       chatting_count++;
-                                      select=1;
                                       _timer.cancel();
                                       select_count++;
                                     });
@@ -197,7 +241,7 @@ class _scenario1State extends State<scenario1> {
           appBar: AppBar(
             backgroundColor: Colors.grey[700],
             title: Container(
-              width: MediaQuery.of(context).size.width/100*20,
+              width: MediaQuery.of(context).size.width/100*25,
               child: Row(
                 children: [
                   Container(
@@ -205,7 +249,7 @@ class _scenario1State extends State<scenario1> {
                       child: Center(child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 30))
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width/100*15,
+                    width: MediaQuery.of(context).size.width/100*20,
                     child: Center(
                       child: Text("김보라",style: TextStyle(color: Colors.white,fontSize: 25)),
                     ),
@@ -221,7 +265,7 @@ class _scenario1State extends State<scenario1> {
                     controller: _scrollController,
                     itemCount: chatting_count,
                     itemBuilder: (BuildContext context,int index){
-                      return scenario[index].values.toString() == "(victim)"
+                      return scenario[select==1?index+startIndex:index].values.toString() == "(victim)"
                           ?
                       Container(
                         padding: EdgeInsets.all(10),
@@ -239,13 +283,13 @@ class _scenario1State extends State<scenario1> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.yellow[500],
                               ),
-                              child: Text("${scenario[index].keys.toString().replaceAll("(", "").replaceAll(")", "")}"),
+                              child: Text("${scenario[select==1?index+startIndex:index].keys.toString().replaceAll("(", "").replaceAll(")", "")}"),
                             )
                           ],
                         ),
                       )
                           :
-                      scenario[index].values.toString() == "(fraud)"
+                      scenario[select==1?index+startIndex:index].values.toString() == "(fraud)"
                           ?
                       Container(
                         padding: EdgeInsets.all(10),
@@ -263,19 +307,19 @@ class _scenario1State extends State<scenario1> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey[500],
                               ),
-                              child: Text("${scenario[index].keys.toString().replaceAll("(", "").replaceAll(")", "")}"),
+                              child: Text("${scenario[select==1?index+startIndex:index].keys.toString().replaceAll("(", "").replaceAll(")", "")}"),
                             )
                           ],
                         ),
                       )
                           :
-                      scenario[index].values.toString()=="(select)"
+                      scenario[select==1?index+startIndex:index].values.toString()=="(select)"
                           ?
                       Container(
 
                       )
                           :
-                      scenario[index].values.toString()=="(popup)"
+                      scenario[select==1?index+startIndex:index].values.toString()=="(popup)"
                           ?
                       AlertDialog(
                         backgroundColor: Colors.white,
@@ -302,7 +346,7 @@ class _scenario1State extends State<scenario1> {
                         ],
                       )
                           :
-                      scenario[index].values.toString()=="(picture)"
+                      scenario[select==1?index+startIndex:index].values.toString()=="(picture)"
                           ?
                       Container(
                         height: MediaQuery.of(context).size.height/100*50,
@@ -313,7 +357,7 @@ class _scenario1State extends State<scenario1> {
                         child: Image.asset("assets/scenario1_picture.png")
                       )
                               :
-                      scenario[index].values.toString()=="(warning)"
+                      scenario[select==1?index+startIndex:index].values.toString()=="(warning)"
                           ?
                       Container(
                         padding: EdgeInsets.all(10),
@@ -327,7 +371,7 @@ class _scenario1State extends State<scenario1> {
                               padding: EdgeInsets.all(10),
                               width: MediaQuery.of(context).size.width/100*65,
                               height: MediaQuery.of(context).size.height/100*12,
-                              child: Center(child: Text("${scenario[index].keys.toString().replaceAll("(", "").replaceAll(")", "")}",textAlign: TextAlign.center,style: TextStyle(color: Colors.red),)),
+                              child: Center(child: Text("${scenario[select==1?index+startIndex:index].keys.toString().replaceAll("(", "").replaceAll(")", "")}",textAlign: TextAlign.center,style: TextStyle(color: Colors.red),)),
                             )
                           ],
                         ),
@@ -345,7 +389,7 @@ class _scenario1State extends State<scenario1> {
                               padding: EdgeInsets.all(10),
                               width: MediaQuery.of(context).size.width/100*65,
                               height: MediaQuery.of(context).size.height/100*12,
-                              child: Center(child: Text("${scenario[index].keys.toString().replaceAll("(", "").replaceAll(")", "")}",textAlign: TextAlign.center,)),
+                              child: Center(child: Text("${scenario[select==1?index+startIndex:index].keys.toString().replaceAll("(", "").replaceAll(")", "")}",textAlign: TextAlign.center,)),
                             )
                           ],
                         ),
