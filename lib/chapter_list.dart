@@ -16,12 +16,12 @@ class _chapter_listState extends State<chapter_list> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/100*85,
+          height: MediaQuery.of(context).size.height/100*100,
           child: Row(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width/100*20,
-                height: MediaQuery.of(context).size.height/100*85,
+                height: MediaQuery.of(context).size.height/100*100,
                 color: Colors.grey[300],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +54,7 @@ class _chapter_listState extends State<chapter_list> {
               Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width/100*80,
-                height: MediaQuery.of(context).size.height/100*85,
+                height: MediaQuery.of(context).size.height/100*100,
                 child: Column(
                   children: [
                     Container(
@@ -122,16 +122,27 @@ class _chapter_listState extends State<chapter_list> {
                               margin: EdgeInsets.only(left: 20),
                               height: MediaQuery.of(context).size.height/100*12,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.account_circle_rounded,size: 50,),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Chapter1"),
-                                      Text("핸드폰 수리")
-                                    ],
-                                  )
+                                  Container(
+                                    child:Row(
+                                      children: [
+                                        Icon(Icons.account_circle_rounded,size: 50,),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Chapter1"),
+                                            Text("핸드폰 수리")
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 20),
+                                      child: Icon(Icons.check_circle_rounded,color: Colors.green,)
+                                  ),
                                 ],
                               ),
                             ),
@@ -191,12 +202,6 @@ class _chapter_listState extends State<chapter_list> {
             ],
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/100*15,
-          color: Colors.black,
-          child: Center(child: Text("광고 배너",style: TextStyle(color: Colors.white),)),
-        )
       ],
     );
   }

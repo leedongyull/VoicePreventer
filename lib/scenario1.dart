@@ -187,7 +187,9 @@ class _scenario1State extends State<scenario1> {
                                     Navigator.pop(context);
                                     setState(() {
                                       chatting_count++;
-                                      select=0;
+                                      if(select_count==1){
+                                        select=1;
+                                      }
                                       _timer.cancel();
                                       select_count++;
                                     });
@@ -206,7 +208,7 @@ class _scenario1State extends State<scenario1> {
                                 MaterialButton(
                                   onPressed: (){
                                     if(select_count==1){
-                                      select=1;
+                                      select=0;
                                     }
                                     Navigator.pop(context);
                                     setState(() {
